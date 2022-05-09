@@ -110,3 +110,28 @@
     
 ## 5장 형식 맞추기
 
+### 1. 포맷팅이 중요한 이유
+    - 가독성에 필수적이다
+
+### 2. 클린코드 포맷팅 
+    - 적절한 길이 유지 (~200라인, <500라인)
+        - 200라인을 넘억나다면 클래스가 여러 일을 하고 있을 수 있다. SRP 위배 
+    - 밀접한 개념은 서로 가까이 둔다 
+        - 행 묶음은 완결된 생각 하나를 표현하기 때문에 개념은 빈 행으로 분리한다.
+        - 변수는 사용되는 위치에서 최대한 가까이 선언한다. 
+
+### 3. Java Class Declarations 
+    - Class 내부 코드 순서
+        1. static 변수 : public -> protected -> package -> private 순서 
+        2. instance 변수 : public -> protected -> package -> private 순서
+        3. 생성자 
+        4. 메서드 : public 메서드에서 호출되는 private 메서드는 그 아래에 둔다. 가독성 위주로 그룹핑한다. 
+
+### 4. Team Coding Convention
+    - 팀의 코딩 스타일에 관한 약속
+    - 참고
+        - Google Java Style Guide : https://google.github.io/styleguide/javaguide.html
+        - Naver Hackday Java Convention : https://naver.github.io/hackday-conventions-java/
+
+
+## 6장
