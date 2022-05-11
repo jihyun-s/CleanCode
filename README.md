@@ -187,3 +187,61 @@
         - row를 담는 객체와 database에 접근할 수 있는 객체가 분리되어 있다. 
         - Person은 값만 담고 있고, 생성, 수정 등 액션은 Person Mapper에서 담당한다. 
         
+## 7장 우아하게 예외 처리하기 
+
+### 1. 예외 처리 방식
+    - 오류 코드를 리턴하지 말고, 예외를 던져라 (명확하고 처리흐름이 깔끔해진다.) 
+        1. 오류가 발생한 부분에서 예외를 던진다. (별도의 처리가 필요한 예외라면 checked exception으로 던진다.) 
+        2. checked exception에 대한 예외처리를 하지 않는다면 메서드 선언부에 throws를 명시해야 한다. 
+        3. 예외를 처리할 수 있는 곳에서 catch하여 처리한다.
+
+### 2. Unchecked Exception을 사용하라
+    - Checked vs Unchecked Exception 
+        - Exception을 상속하면 Checked Exception : 명시적인 예외처리가 필요하다. (ex. IOException, SQLException) 
+        - RuntimeException을 상속하면 UncheckedException : 명시적인 예외처리가 필요하지 않다. 
+        (ex. NullPointerException, IllegalArgumentException, IndexOutOfBoundException) 
+        
+    - Exception에 관한 규약 
+        - Error 클래스를 상속해 하위 클래스를 만드는 일은 자제하자 
+        - 사용자가 직접 구현하는 unchecked throwable은 모두 RuntimeException의 하위 클래스여야 한다 
+        - Exception, RuntimeException, Error를 상속하지 않는 throwable은 절대로 사용하지 말자 
+    
+    - Checked Exception이 나쁜 이유
+        1. 특정 메서드에서 checked exception을 throw하고 상위 메서드에서 그 exception을 catch한다면 
+          모든 중간단계 메서드에 exception을 throws 해야 한다 
+        2. OCP(개방 폐쇄 원칙) 위배 
+          상위 레벨 메서드에서 하위 레벨 메서드의 디테일에 대해 알아야 하기 때문에 OCP 원칙에 위배된다. 
+        3. 필요한 경우 checked exception을 사용해야 되지만 일반적인 경우 득보다 실이 많다. 
+
+### 3. Exception 잘 쓰기 
+    - 예외에 메시지 담기 
+        - 오류가 발생한 원인과 위치를 찾기 쉽도록, 예외를 던질 때는 전후 상황을 충분히 덧붙인다. 
+        - 실패한 연산 이름과 유형 등 정보를 담아 예외를 던진다. 
+    
+    - exception wrapper : 예외를 감싸는 클래스를 만든다. 
+        - port.open() 시 발생하는 checked exception들을 감싸도록 port를 가지는 LocalPort 클래스를 만든다. 
+        - port.open()이 던지는 checked exception들을 하나의 PortDeviceFailure exception으로 감싸서 던진다. 
+        
+
+### 4. 실무 예외 처리 패턴 
+    - getOrElse : 예외 대신 기본값을 리턴한다
+        1. null이 아닌 기본값 : 복수형의 데이터를 가져올 때는 데이터 없음을 의미하는 컬렉션을 리턴. (size 0) 
+        2. 도메인에 맞는 기본값
+        
+    - getOrElseThrow : null 대신 예외를 던진다 (기본값이 없다면) 
+        - 데이터를 제공하는 쪽에서 null 체크를 하여, 데이터가 없는 경우엔 예외를 던진다. 
+        호출부에서 매번 null 체크를 할 필요 없이 안전하게 데이터를 사용할 수 있다. 
+        
+    - 파라미터의 null을 점검하라 
+        - null을 리턴하는 것도 나쁘지만 null을 메서드로 넘기는 것은 더 나쁘다.
+        - null을 메서드의 파라미터로 넣어야 하는 API를 사용하는 경우가 아니면 null을 메서드로 넘기지 마라.
+        - null을 파라미터로 받지 못하게 한다. (unchecked exception, assert 사용 등) 
+
+    - 자신의 예외를 정의한다. 
+        - 에러 로그에서 stacktrace 해봤을 때 우리가 발생시킨 예외라는 것을 바로 인지할 수 있다. 
+        - 다른 라이브러리에서 발생한 에러와 섞이지 않는다. 
+        IllegalArgumentException을 던지는 것보다 우리 예외로 던지는게 어느 부분에서 에러가 났는지 파악하기에 용이하다.
+        - 우리 시스템에서 발생한 에러의 종류를 나열할 수 있다. 
+
+
+## 8장 경계 
