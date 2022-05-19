@@ -519,7 +519,7 @@
         - 수정, 실행, 확인 사이클을 짧게 만들어라
         - 나라면 어떻게 개발했을까? 질문해보기 
         - 분석하면서 문서로 정리하라 
-        - 디버거 활용하기 (LOG Level을 debug로 설정. sopt보다는 Thread.dumpStack() 활용)
+        - 디버거 활용하기 (LOG Level을 debug로 설정. sout보다는 Thread.dumpStack() 활용)
         - 코드의 일부를 통해 먼저 파악하기 (테스트 코드는 좋은 교본) 
     
     - Spring 프로젝트 접근법
