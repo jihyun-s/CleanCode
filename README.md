@@ -534,3 +534,59 @@
         8. 세부적인 비즈니스 로직을 확인할 때는 test 코드와 비교하며 이해한다. 
 
 ## 17장 냄새와 휴리스틱 
+### 1. 철학 
+    - 나쁜 코드가 나쁜 이유 : 생산성 저하 
+    - 클린 코드 : 성능이 좋은 코드, 의미가 명확한 코드(가독성이 좋은 코드), 중복이 제거된 코드 
+    - 창발적 설계 네번째 규칙 : 실용적 관점에서 타협한다. (과도한 설계를 하지말자) 
+    - 보이스카우트 룰 : 전보다 더 깨끗한 코드로 만든다. 
+
+### 2. 공동 창작 매너 
+    - 네이밍
+    - 함수
+    - 주석
+    - 포맷팅 
+    - Team Coding Convetion 
+    
+### 3. 객체 지향 패턴 
+    - 캡슐화(Encapsulation) : 객체의 실제 구현을 외부로부터 감추는 방식 
+    - 외부 코드와 호환하기 : Adapter 패턴 
+        - 외부 코드를 호출할 때, 우리가 정의한 인터페이스 대로 호출하기 위해 사용하는 패턴 
+    - 높은 결합도, 낮은 응집도 
+        - 결합도 : 다른 모듈간의 의존도
+        - 응집도 : 모듈 내부의 기능 집중도 
+    - SOLID 원칙 : 객체지향 설계의 5가지 원칙
+        - SRP 단일 책임 원칙 : 한 클래스는 하나의 책임만 가져야 한다. 
+        - OCP 개방-폐쇄 원칙 : 확장에는 열려 있으나 변경에는 닫혀 있어야 한다. 
+        - LSP 리스코프 치환 원칙 : 서브 타입은 언제나 기반 타입으로 교체할 수 있어야 한다. 
+        - ISP 인터페이스 분리 원칙 : 자신이 사용하지 않는 인터페이스는 구현하지 말아야 한다. 
+        - DIP 의존성 역전 원칙 : 추상화에 의존해야 한다. 추상화는 세부사항에 의존해서는 안된다. 
+        
+### 4. 오류 처리
+    - Unchecked Exception을 사용하자 
+    - Checked vs Unchecked Exception 
+        - Exception을 상속하면 Checked Exception : 명시적인 예외처리가 필요하다. (Ex. IOException, SQLException) 
+        - RuntimeException을 상속하면 Unchecked Exception : 명시적인 예외처리가 필요하지 않다.
+          (Ex. NullPointerException, IllegalArgumentException, IndexOutOfBoundException) 
+    - getOrElse : 예외 대신 기본값을 리턴한다 
+                  1. null이 아닌 기본값
+                  2. 도메인에 맞는 기본값 
+    - getOrElseThorw : null 대신 예외를 던진다. (기본값이 없다면) 
+
+
+### 5. 테스트
+    - Test Pyramid (70% unit tests, 20% integration tests, 10% end-to-end tests)
+        - Unit Test : 프로그램 내부의 개별 컴포넌트 동작 테스트 
+        - Integration Test : 개별 컴포넌트들을 합쳐서 동작 테스트 
+        - E2E Test : 실제 유저의 시나리오대로 네트워크를 통해 서버의 Endpoint를 호출해 테스트
+    - FIRST 원칙
+        - Fast 빠르게 : 테스트는 빨리 돌아야 한다. 
+        - Independent 독립적으로 : 각 테스트를 독립적으로 작성한다. 
+        - Repeatable 반복 가능하게
+        - Self-Validating 자가검증하는 : 테스트는 bool 값으로 결과를 내야 한다. 
+        - Timely 적시에 : 테스트하려는 실제 코드를 구현하기 직전에 구현한다. 
+
+### 6. 개선
+    - 기능을 추가하지 않고 개선을 시작한다. 
+    - 테스트 코드를 작성한다. 
+    - 점진적으로 개선한다. 
+    
